@@ -1,0 +1,42 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: user1-promote
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: user1
+  source:
+    repoURL: GIT_URL/customers-gitops.git
+    targetRevision: HEAD
+    path: .
+    helm:
+      parameters:
+      - name: namespace.name
+        value: customers-user1-prod
+      - name: environment
+        value: prod
+      - name: image.tag
+        value: v1
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: customers-user1
+  ignoreDifferences:
+    - group: '*'
+      jqPathExpressions:
+        - '.imagePullSecrets[] | select(.name | contains("-dockercfg-"))'
+      kind: ServiceAccount
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - ApplyOutOfSyncOnly=true
+    - CreateNamespace=true
+    retry:
+      limit: -1
+      backoff:
+        duration: 5s # the amount to back off. Default unit is seconds, but could also be a duration (e.g. "2m", "1h")
+        factor: 2 # a factor to multiply the base duration after each failed retry
+        maxDuration: 2m # the maximum amount of time allowed for the backoff strategy

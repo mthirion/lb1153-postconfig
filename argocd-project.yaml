@@ -1,0 +1,16 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: user1
+spec:
+  destinations:
+    - name: local
+      namespace: customers-user1
+      server: 'https://kubernetes.default.svc'
+  sourceRepos:
+    - '*'
+  clusterResourceWhitelist:
+  - group: ''
+    kind: Namespace
+  - group: 'rbac.authorization.k8s'
+    kind: ClusterRoleBinding

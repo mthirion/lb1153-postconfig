@@ -1,0 +1,12 @@
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: user-pod-rolebinding
+subjects:
+  - apiGroup: rbac.authorization.k8s.io
+    kind: User
+    name: user1
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: user-terminal

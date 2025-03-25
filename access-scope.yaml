@@ -1,7 +1,0 @@
-name: namespace-scope-user1
-description: Give visibility to a single namespace
-rules:
-    included:
-        - cluster: https://kubernetes.default.svc
-          namespaces:
-            - customers-user1

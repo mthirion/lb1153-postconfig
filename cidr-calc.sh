@@ -2,8 +2,7 @@
 
 # Calculates network and broadcast based on supplied ip address and netmask
 
-# Usage: broadcast_calc.sh 192.168.0.1 255.255.255.0
-# Usage: broadcast_calc.sh 192.168.0.1/24
+# Usage: $SCRIPT 92.168.0.1/24
 
 tonum() {
     if [[ $1 =~ ([[:digit:]]+)\.([[:digit:]]+)\.([[:digit:]]+)\.([[:digit:]]+) ]]; then

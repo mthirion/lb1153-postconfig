@@ -15,6 +15,14 @@
 #
 # ===========================================
 
+if [[ -z $1 || -z $2 ]]
+then
+	echo "missing parameter"
+	exit 1
+fi
+
+ACS_CENTRAL=$1
+ACS_PSWD=$2
 
 #echo "curl -k -u admin:$ACS_PSWD $ACS_CENTRAL/v1/clusters | jq '.clusters[] | select (.name == "production").id'"
 CLUSTER=$(curl -s -k -u admin:$ACS_PSWD $ACS_CENTRAL/v1/clusters | jq '.clusters[] | select (.name == "production").id' )
